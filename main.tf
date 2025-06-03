@@ -173,6 +173,34 @@ resource "kubernetes_config_map" "aws_auth" {
   }
 }
 
+################### Helm Provider for ArgoCD ###################
+provider "helm" {
+  kubernetes {
+    host                   = data.aws_eks_cluster.preyelg.endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.preyelg.certificate_authority[0].data)
+    token                  = data.aws_eks_cluster_auth.preyelg.token
+  }
+}
+
+################### ArgoCD Helm Chart ###################
+resource "helm_release" "argocd" {
+  name       = "argocd"
+  namespace  = "argocd"
+  repository = "https://argoproj.github.io/argo-helm"
+  chart      = "argo-cd"
+  version    = "5.52.1"
+
+  create_namespace = true
+
+  values = [file("argocd-values.yaml")]  # optional custom values
+
+  depends_on = [
+    aws_eks_cluster.preyelg,
+    aws_eks_node_group.default
+  ]
+}
+
+
 ################### Outputs ###################
 
 output "cluster_name" {
