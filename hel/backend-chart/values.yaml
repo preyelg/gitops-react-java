@@ -1,7 +1,7 @@
 replicaCount: 2
 
 image:
-  repository: preyelg/backend
+  repository: preyelg/spring-backend
   tag: latest
   pullPolicy: IfNotPresent
 
@@ -11,4 +11,5 @@ service:
 
 ingress:
   enabled: true
+  className: alb
   host: backend.example.com
