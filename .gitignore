@@ -32,6 +32,7 @@ override.tf
 override.tf.json
 terraform.tfvars
 terraform.tfvars.json
+.terraform.lock.hcl
 
 Kubernetes
 kubeconfig
