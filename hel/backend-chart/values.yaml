@@ -1,14 +1,10 @@
 replicaCount: 2
 
 image:
-  repository: preyelg/backend
+  repository: preyelg/spring-backend
   tag: latest
   pullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
   port: 8080
-
-ingress:
-  enabled: true
-  host: backend.example.com
