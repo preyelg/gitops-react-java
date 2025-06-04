@@ -13,8 +13,22 @@ spec:
         app: {{ include "backend-chart.name" . }}
     spec:
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - containerPort: {{ .Values.service.port }}
+      - name: {{ .Chart.Name }}
+    image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+    imagePullPolicy: {{ .Values.image.pullPolicy }}
+    ports:
+      - containerPort: {{ .Values.service.port }}
+    readinessProbe:
+      httpGet:
+        path: /actuator/health
+        port: {{ .Values.service.port }}
+      initialDelaySeconds: 15
+      periodSeconds: 10
+    livenessProbe:
+      httpGet:
+        path: /actuator/health
+        port: {{ .Values.service.port }}
+      initialDelaySeconds: 30
+      periodSeconds: 20
+
+          
