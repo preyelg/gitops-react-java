@@ -2,10 +2,14 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "backend-chart.fullname" . }}
+  name: backend-ingress
+  namespace: {{ .Values.namespace }}
   annotations:
-    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
 spec:
+  ingressClassName: {{ .Values.ingress.className }}
   rules:
     - host: {{ .Values.ingress.host }}
       http:
@@ -14,7 +18,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ include "backend-chart.fullname" . }}
+                name: backend
                 port:
                   number: {{ .Values.service.port }}
 {{- end }}

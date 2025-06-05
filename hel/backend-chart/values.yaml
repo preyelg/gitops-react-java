@@ -1,5 +1,7 @@
 replicaCount: 2
 
+namespace: backend
+
 image:
   repository: preyelg/java-backend
   tag: latest

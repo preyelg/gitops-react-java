@@ -1,32 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "backend-chart.fullname" . }}
+  name: backend
+  namespace: {{ .Values.namespace }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "backend-chart.name" . }}
+      app: backend
   template:
     metadata:
       labels:
-        app: {{ include "backend-chart.name" . }}
+        app: backend
     spec:
       containers:
-        - name: {{ .Chart.Name }}
+        - name: backend
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.service.port }}
-          readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: {{ .Values.service.port }}
-            initialDelaySeconds: 15
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /actuator/health
-              port: {{ .Values.service.port }}
-            initialDelaySeconds: 30
-            periodSeconds: 20
+            - containerPort: 8080
