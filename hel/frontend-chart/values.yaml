@@ -1,7 +1,7 @@
 replicaCount: 2
 
 image:
-  repository: preyelg/frontend
+  repository: preyelg/react-app
   tag: latest
   pullPolicy: IfNotPresent
 

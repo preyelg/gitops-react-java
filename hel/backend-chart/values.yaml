@@ -1,7 +1,7 @@
 replicaCount: 2
 
 image:
-  repository: preyelg/spring-backend
+  repository: preyelg/java-backend
   tag: latest
   pullPolicy: IfNotPresent
 

@@ -151,6 +151,7 @@ resource "aws_eks_node_group" "default" {
   ]
 }
 
+/*
 ################### aws-auth ConfigMap ###################
 
 resource "kubernetes_config_map" "aws_auth" {
@@ -172,6 +173,7 @@ resource "kubernetes_config_map" "aws_auth" {
     ])
   }
 }
+*/
 
 ################### Helm Provider for ArgoCD ###################
 provider "helm" {
