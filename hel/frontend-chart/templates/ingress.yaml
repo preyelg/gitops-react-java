@@ -2,19 +2,21 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "fullname" . }}
+  name: frontend-ingress
+  namespace: {{ .Values.namespace }}
   annotations:
-    kubernetes.io/ingress.class: alb
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: {{ .Values.ingress.className }}
   rules:
     - host: {{ .Values.ingress.host }}
       http:
         paths:
-          - path: /
+          - path: {{ .Values.ingress.path }}
             pathType: Prefix
             backend:
               service:
-                name: {{ include "fullname" . }}
+                name: frontend
                 port:
                   number: {{ .Values.service.port }}
 {{- end }}
