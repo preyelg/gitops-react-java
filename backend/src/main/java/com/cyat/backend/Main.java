@@ -17,4 +17,10 @@ public class Main {
     public String home() {
         return "Backend service for GitOps project running...";
     }
+
+    @GetMapping("/api/hello")
+    public String hello() {
+        return "Hello from /api/hello!";
+    }
+
 }
