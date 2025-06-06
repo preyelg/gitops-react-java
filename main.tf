@@ -178,11 +178,10 @@ resource "kubernetes_config_map" "aws_auth" {
 ################### Helm Provider for ArgoCD ###################
 provider "helm" {
   kubernetes {
-    host                   = data.aws_eks_cluster.preyelg.endpoint
-    cluster_ca_certificate = base64decode(data.aws_eks_cluster.preyelg.certificate_authority[0].data)
-    token                  = data.aws_eks_cluster_auth.preyelg.token
+    config_path = pathexpand("~/.kube/config")
   }
 }
+
 
 ################### ArgoCD Helm Chart ###################
 resource "helm_release" "argocd" {
